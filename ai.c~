@@ -1,0 +1,30 @@
+#include<stdio.h>
+#include <stdlib.h>
+#include <time.h> // srand
+//#include "game.h"
+
+//extern char board[3][3]; nu stiu exact daca trebuie declarat aici sau in game.h
+
+void aiMakeMove() {
+    int options[9][2];
+    int count = 0;
+    //9 celule goale
+    // fiecare pozitie are 2 coordonate. randul i si coloana j
+    // Găsește toate celulele goale
+    for (int i = 0; i < 3; i++)
+        for (int j = 0; j < 3; j++)
+            if (board[i][j] == ' ') {
+	      options[count][0] = i; // randurile goale
+	      options[count][1] = j;// coloanele goale
+                count++;
+            }
+
+    // Dacă există celule goale, alege una aleator
+    if (count > 0) {
+        srand((unsigned int)time(NULL));
+        int r = rand() % count;
+        int row = options[r][0];
+        int col = options[r][1];
+        board[row][col] = 'O';  // AI joacă cu O
+    }
+}

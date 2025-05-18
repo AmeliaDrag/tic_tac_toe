@@ -1,0 +1,12 @@
+#ifndef SCORE_H
+#define SCORE_H
+
+void loadScores();
+void saveScores();
+void updateScore(char winner);
+void resetScores();
+int getScoreX();
+int getScoreO();
+int getDraws();
+
+#endif

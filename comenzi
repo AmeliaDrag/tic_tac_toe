@@ -1,0 +1,4 @@
+pt instalarea biblotecii ncurses: sudo apt update
+sudo apt install libncurses5-dev libncursesw5-dev
+pt compilare:gcc main.c game.c interface.c ai.c scores.c -lncurses -o tic_tac_toe
+pt rurale:./tic_tac_toe
