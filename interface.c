@@ -12,6 +12,11 @@ void initInterface() {
     cbreak();    // nu aștepta Enter după fiecare tastă
     keypad(stdscr, TRUE); // activează tastele săgeți
     curs_set(0);// ascunde cursorul terminalului
+    start_color();  // activează modul color
+    init_pair(1, COLOR_RED, COLOR_BLACK);     // X rosu
+    init_pair(2, COLOR_CYAN, COLOR_BLACK);    // O cyan
+    init_pair(3, COLOR_WHITE, COLOR_BLUE);    // fundal evidentiat
+
 }
 void endInterface() {
     endwin();  // stop la modul ncurses revine terminalul la normalll
@@ -23,6 +28,38 @@ void endInterface() {
 //attron(A_REVERSE)= INVERSEAZA CULOAREA textului gen fundal negru text alb in fundal alb text negru or smth
 // puteam folosi si bold, blick, dim etc
 void drawGameScreen() {
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (i == randulSelectat && j == coloanaSelectata)
+                attron(COLOR_PAIR(3)); // fundal evidențiat
+
+            char c = board[i][j];
+            if (c == 'X') {
+                attron(COLOR_PAIR(1));
+                mvprintw(i * 2, j * 4, " %c ", c);
+                attroff(COLOR_PAIR(1));
+            } else if (c == 'O') {
+                attron(COLOR_PAIR(2));
+                mvprintw(i * 2, j * 4, " %c ", c);
+                attroff(COLOR_PAIR(2));
+            } else {
+                mvprintw(i * 2, j * 4, "   ");
+            }
+
+            if (i == randulSelectat && j == coloanaSelectata)
+                attroff(COLOR_PAIR(3)); // oprește fundalul
+
+            if (j < 2)
+                mvprintw(i * 2, j * 4 + 3, "|");
+        }
+        if (i < 2)
+            mvprintw(i * 2 + 1, 0, "---+---+---");
+    }
+
+    mvprintw(8, 0, "Scor - X: %d  O: %d  Remiza: %d", scoreX, scoreO, draws);
+    refresh();
+}
+/*void drawGameScreen() {
   for (int i = 0; i < 3; i++) { // pt fircare  rand
         for (int j = 0; j < 3; j++) {       // pt fircare coloană
             if (i == randulSelectat && j == coloanaSelectata) 
@@ -41,7 +78,7 @@ void drawGameScreen() {
     }
   mvprintw(8,0, "Scor-X: %d O: %d, Remiza: %d", scoreX,scoreO, draws);
   refresh();  // actualizează ecranul. standard la bibloteca ncurses.
-}
+  }*/
 // ch e caracaterul pus. key_up e sageata in sus s tot asa
 void handleInput(int ch, int mode) {
   if (ch == KEY_UP && randulSelectat > 0) randulSelectat--;

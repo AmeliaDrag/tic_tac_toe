@@ -40,16 +40,16 @@ int main() {
         drawGameScreen();
 
         if (winner == 'X' || winner == 'O') {
-          mvprintw(8, 0, "Jucatorul %c a castigat!\n", winner);
+          mvprintw(8, 0, "Jucatorul %c a castigat!", winner);
         }
 	else {
-          mvprintw(8, 0, "Egalitate!\n");
+          mvprintw(8, 0, "Egalitate!");
         }
 
         refresh();
         updateScore(winner == ' ' ? 'D' : winner); // update scor; D pt remiză
         saveScores();
-        mvprintw(10, 0, "Apasa enter  pentru a continua...");
+        mvprintw(10, 0, "Apasa orice tasta pentru a continua...");
         getch();  // Asteapta apasarea unei taste
         break;
       }
@@ -71,7 +71,7 @@ int main() {
         refresh();
         updateScore('D');
         saveScores();
-        mvprintw(10, 0, "Apasa enter pentru a continua...");
+        mvprintw(10, 0, "Apasa orice tasta pentru a continua...");
         getch();
         break;
       }
